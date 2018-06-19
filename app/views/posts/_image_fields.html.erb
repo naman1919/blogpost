@@ -1,0 +1,7 @@
+<div class="nested-fields">
+  <%= f.check_box :_destroy %>
+  <%= f.label :Upload_Image %>
+  <%= f.file_field :name %>
+  
+  <%= link_to_remove_association "remove image", f, class: "btn btn-warning btn-sm" %>
+</div>

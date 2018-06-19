@@ -1,0 +1,21 @@
+<div id = "message" >
+<%= form_with(model: [@post, @post.comments.build], remote: true) do |form| %>
+  <p>
+    <%= form.label :Title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :Comments %><br>
+    <%= form.text_area :body %>
+  </p>
+  
+  <p>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+</div>

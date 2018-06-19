@@ -1,0 +1,51 @@
+<%= form_for @post do |form| %>
+  <% if @post.errors.any? %>
+    <div id = "error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %>Prohibited this post from save</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <p>
+      <%= form.label :title %><br />
+      <%= form.text_field :title %>
+    </p>
+
+    <p>
+      <%= form.label :body %><br />
+      <%= form.text_area :body %>
+    </p>
+  <!--  
+    <p>
+      <%= form.label :publish_now %>
+      <%= form.check_box :publish, {}, "true", "false" %>
+    </p>
+  -->
+    <p>
+      <%= form.label :published_at %>
+      <%= form.date_select :published_at %>
+    </p>
+  </div>
+
+  <div>
+    <div id="images">
+      <p>
+        <%= form.fields_for :images  do |image_field| %>
+          <%= render "image_fields", f: image_field %>
+        <% end %>
+      </p>
+      
+      <div class="links">
+        <%= link_to_add_association "Add image", form, :images, class: "btn btn-info btn-sm" %>
+      </div>
+    </div>
+  </div>
+  
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,48 @@
+<table id="post_list" class="display table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Published At</th>
+      <th>POST Image</th>
+      <th>Author</th>
+      <th>Status</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <% if @ability.can? :read, post %>     
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.body %></td>
+          <td><%= post.published_at.strftime("%d/%m/%Y") %></td>
+          <td>
+            <ul>
+              <% post.images.each do |image| %>
+                <% if image.name.present? %>
+                  <li>
+                  <%= link_to image_tag(image.name.url(:thumb), :alt => "No  Thumb Available", class: 'img-thumbnail'), image.name.url %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </td>
+          <td><%= post.user.first_name %></td>
+          <td> <% if post.publish %>
+              Published
+            <% else %>
+              Not Published
+              <%= link_to "Approve", approve_post_path(post), remote: true, class: "btn btn-success btn-sm" if @ability.can? :approve, post %>
+            <% end %>
+          </td>
+          <td><%= link_to "Show", post_path(post), class: "btn btn-success btn-sm"%></td>
+          <td><%= link_to "Edit", edit_post_path(post), class: "btn btn-info btn-sm"  if @ability.can? :update, post, user_id: current_user.id%></td>
+          <td><%= link_to "Delete Post",post_path(post), method: :delete,remote: true, data: { confirm: 'Are you sure'}, class: "btn btn-danger btn-sm" if @ability.can? :destroy, post, user_id: current_user.id %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

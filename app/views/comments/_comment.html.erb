@@ -1,0 +1,16 @@
+  <p>
+    <b>Title:</b>
+    <%= comment.title %>
+  </p>
+
+  <p>
+    <b>Comment:</b>
+    <%= comment.body %>
+  </p>
+  
+  <p>
+    <b>Commentor:</b>
+      <%= comment.user.first_name %>
+  </p>
+  <%= link_to "Delete above comment",post_comment_path(comment.post, comment), method: :delete, remote: true, data: {confirm: "Are You Sure?" } if @ability.can? :destroy, comment, user_id: current_user.id%>
+<hr>

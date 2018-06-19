@@ -1,0 +1,34 @@
+<h3>POST</h3>
+<p>
+  <b>Title:</b>
+  <%= @post.title %>
+</p>
+
+<p>
+  <b>Description</b>
+  <%= @post.body %>
+</p>
+
+<p>
+  <b>Author</b>
+  <%= @post.user.first_name %>
+</p>
+
+<% @post.images.each do |image| %>
+  <%= link_to image_tag(image.name.url(:thumb), :alt => "No  Thumb Available", class: 'img-thumbnail'), image.name.url %>
+<% end %>
+
+<% if @post.comments.count > 0 %>
+  <h2> Comments: </h2>
+  <div id="comments"><%= render @post.comments %></div>
+<% end %>
+
+<h1>Give Comments</h1>
+<div id="comment-form">
+  <%= render 'comments/form' %> 
+</div>
+
+
+
+<%= link_to 'Back', posts_path %>
+<!-- <%= link_to 'Edit', edit_post_path(@post) %> -->

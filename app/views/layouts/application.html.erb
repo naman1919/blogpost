@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blogpost</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar bg-primary">
+      <div class="container-fluid">
+        <div class="float-left">
+        <% if v1_user_signed_in? %>
+        Hello <b><%= current_user.first_name %></b>
+          <% if current_user.images.last.present? %>
+            <%= link_to image_tag(current_user.images.last.name.url(:thumb), class: 'img-thumbnail'), current_user.images.last.name.url %>
+          <% end %>
+        </div>
+        <div class="float-right">
+          <%= link_to "Create Post", new_post_path, class: "btn btn-warning" %>
+          <%= link_to 'Edit profile', edit_v1_user_registration_path, class: 'btn btn-info' %> 
+          <%= link_to "Logout", destroy_v1_user_session_path, method: :delete, class: 'btn btn-danger' %>
+        <% else %>
+          <!-- <%= link_to "List", posts_path, class: "btn btn-success" %> -->
+          <%= link_to "Sign up", new_v1_user_registration_path, class: 'btn btn-warning' %> 
+          <%= link_to "Login", new_v1_user_session_path, class: 'btn btn-success' %>
+        <% end %>
+        </div> 
+      </div>
+  </nav>
+    <%= yield %>
+  </body>
+</html>
